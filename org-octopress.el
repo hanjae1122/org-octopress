@@ -73,14 +73,14 @@
          (org-posts org-octopress-directory-org-posts))
     (orglue-update-publish-project-alist
      'org-publish-project-alist
-     `(
-       ("octopress" :components ("octopress-posts" "octopress-org"))
+     `(("octopress" :components ("octopress-posts"
+				 "octopress-org"
+				 "octopress-static"))
        ("octopress-posts"
         :base-directory ,org-posts
         :publishing-directory ,oct-posts
         :base-extension "org"
-        :recursive nil
-        :exclude "/[^0-9][^/]+\\.org$" ;; XXXX
+	:recursive t
         :publishing-function org-jekyll-publish-to-html
         )
        ("octopress-org"
@@ -95,11 +95,12 @@
         :base-directory ,org-top
         :publishing-directory ,oct-top
         :base-extension ".*"
-        :exclude "\\.org$"
+        :exclude "\\.org$\\|.*/ltximg/.*"
         :recursive t
         :publishing-function org-publish-attachment
         )
-       ))))
+       )))
+  )
 
 (defvar org-octopress-summary-buffer nil
   "Main buffer, showing summary table")
